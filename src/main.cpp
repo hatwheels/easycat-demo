@@ -84,32 +84,41 @@ void Application ()
     Analog0.Word = analogRead(Ana0);                    // read analog input 0
     Analog0.Word >>= 2;                                 // normalize it on 8 bits
     EASYCAT.BufferIn.Byte[0] = Analog0.Byte[0];         // and put the result into
-                                                        // input Byte 0 
+                                                        // input Byte 0
+                                                             
 
     Analog1.Word = analogRead(Ana1);                    // read analog input 1
     Analog1.Word >>= 2;                                 // normalize it on 8 bits 
     EASYCAT.BufferIn.Byte[1] = Analog1.Byte[0];         // and put the result into
-                                                        // input Byte 1   
+                                                        // input Byte 1                                                         
 
                                                         // --- four output bits management ----
                                                         //                          
-    if (EASYCAT.BufferOut.Byte[0] & (1<<0))             // the four output bits are mapped to the 
+    if (EASYCAT.BufferOut.Byte[0] & (1<<0)) {           // the four output bits are mapped to the 
       digitalWrite (BitOut0, HIGH);                     // lower nibble of output Byte 0
+      //Serial.println("1");                              //
+    }                                                   //
     else                                                // 
       digitalWrite (BitOut0, LOW);                      // we read each bit and write it
                                                         // to the corrisponding pin
-    if (EASYCAT.BufferOut.Byte[0] & (1<<1))             // 
+    if (EASYCAT.BufferOut.Byte[0] & (1<<1)) {           // 
       digitalWrite (BitOut1, HIGH);                     //
+      //Serial.println("2");                              //
+    }                                                   //
     else                                                //
       digitalWrite (BitOut1, LOW);                      // 
                                                         //
-    if (EASYCAT.BufferOut.Byte[0] & (1<<2))             //   
+    if (EASYCAT.BufferOut.Byte[0] & (1<<2)) {           //   
       digitalWrite (BitOut2, HIGH);                     //
+      //Serial.println("3");                              //
+    }                                                   //
     else                                                //
       digitalWrite (BitOut2, LOW);                      // 
                                                         //  
-    if (EASYCAT.BufferOut.Byte[0] & (1<<3))             // 
+    if (EASYCAT.BufferOut.Byte[0] & (1<<3)) {           // 
       digitalWrite (BitOut3, HIGH);                     //
+      //Serial.println("4");                              //
+    }                                                   //
     else                                                //
       digitalWrite (BitOut3, LOW);                      // 
 
@@ -168,7 +177,7 @@ void setup()
   Serial.begin(9600);                                             // serial line initialization
                                                                   //(used only for debug)
            
-  Serial.print ("\nEasyCAT - Generic EtherCAT slave\n");          // print the banner
+  Serial.println ("EasyCAT - Generic EtherCAT slave");          // print the banner
 
   pinMode(BitOut0, OUTPUT);                                       // digital output pins setting
   pinMode(BitOut1, OUTPUT);                                       // 
@@ -187,12 +196,12 @@ void setup()
                                                                   
   if (EASYCAT.Init() == true)                                     // initialization
   {                                                               // succesfully completed
-    Serial.print ("initialized");                                 //
+    Serial.println ("initialized");                                 //
   }                                                               //
   
   else                                                            // initialization failed   
   {                                                               // the EasyCAT board was not recognized
-    Serial.print ("initialization failed");                       //     
+    Serial.println ("initialization failed");                       //     
                                                                   // The most common reason is that the SPI 
                                                                   // chip select choosen on the board doesn't 
                                                                   // match the one choosen by the firmware
